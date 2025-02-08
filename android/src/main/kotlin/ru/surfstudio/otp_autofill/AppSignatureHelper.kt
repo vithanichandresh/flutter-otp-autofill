@@ -20,9 +20,8 @@ class AppSignatureHelper(context: Context) : ContextWrapper(context) {
         return try {
             val packageName = packageName
             val packageManager = packageManager
-            val signatures = packageManager.getPackageInfo(packageName,
-                    PackageManager.GET_SIGNATURES).signatures
-            signatures.mapNotNull { hash(packageName, it.toCharsString()) }
+            val signatures = packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES).signatures
+            signatures?.mapNotNull { hash(packageName, it.toCharsString()) } ?: emptyList()
         } catch (e: PackageManager.NameNotFoundException) {
             emptyList()
         }
